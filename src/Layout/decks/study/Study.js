@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from "react-router-dom";
-import { readDeck, listCards, readCard } from "../../../utils/api/index";
+import { readDeck, readCard } from "../../../utils/api/index";
 
 function Study() {
     const { deckId } = useParams();
@@ -17,7 +17,7 @@ function Study() {
 
         const setDeckAndCards = async() => {
             const currentDeck = await readDeck(deckId, abortController.signal);
-            const currentCards = await listCards(deckId, abortController.signal);
+            const currentCards = currentDeck.cards;
             const currentCard = currentCards.length ? await readCard(currentCards[currentIndex].id, abortController.signal) : {};
 
             setDeckInfo(currentDeck);

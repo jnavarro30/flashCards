@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useRouteMatch, useHistory } from "react-router-dom";
-import { readDeck, listCards, deleteDeck, deleteCard } from "../../utils/api/index";
+import { readDeck, deleteDeck, deleteCard } from "../../utils/api/index";
 
 function Deck({ currentDeckList, setCurrentDeckList }) {
     const { url } = useRouteMatch();
@@ -14,7 +14,7 @@ function Deck({ currentDeckList, setCurrentDeckList }) {
 
         const getDeck = async() => {
             const deck = await readDeck(deckId, abortController.signal);
-            const cards = await listCards(deckId, abortController.signal);
+            const cards = deck.cards;
             setDeckInfo(deck);
             setCurrentCards([...cards]);
         }

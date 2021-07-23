@@ -9,6 +9,16 @@
       "name": "React Router",
       "description": "React Router is a collection of navigational components that compose declaratively with your application.",
       "id": 2
+    },
+    {
+      "name": "new deck edit ",
+      "description": "jsd;lkfjk;sdfdas fdsf",
+      "id": 3
+    },
+    {
+      "name": "Jesse Navarro",
+      "description": "sdsd",
+      "id": 4
     }
   ],
   "cards": [
@@ -76,6 +86,12 @@
       "id": 12,
       "front": "",
       "back": ""
+    },
+    {
+      "front": "frontsdfsdf",
+      "back": "back fsd;kfjdf",
+      "deckId": 3,
+      "id": 13
     }
   ]
 }
