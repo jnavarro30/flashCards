@@ -31,7 +31,9 @@ function CreateDeck({ renderDecks, setRenderDecks, currentDeckList, setCurrentDe
 
     }, [renderDecks])
     
-    const handleCancel = () => {
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setRenderDecks(!renderDecks);
         history.push("/");
     }
 

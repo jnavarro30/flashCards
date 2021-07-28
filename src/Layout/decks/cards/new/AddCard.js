@@ -20,7 +20,8 @@ function AddCard() {
         loadDeck();
     }, [deckId]);
 
-    const handleDone = () => {
+    const handleDone = (e) => {
+        e.preventDefault();
         history.push(`/decks/${deckId}`);
     }
 

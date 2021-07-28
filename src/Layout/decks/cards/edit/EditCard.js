@@ -25,7 +25,8 @@ function EditCard() {
         return () => abortController.abort();
     }, [cardId, deckId]);
 
-    const handleDone= () => {
+    const handleDone= (e) => {
+        e.preventDefault();
         history.push(`/decks/${deckId}`);
     }
 
