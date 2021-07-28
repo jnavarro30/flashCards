@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { readDeck, createCard } from "../../../../utils/api/index";
+import EditAddForm from '../EditAddForm';
 
 function AddCard() {
     const { deckId } = useParams();
@@ -29,21 +30,12 @@ function AddCard() {
         const abortController = new AbortController();
         await createCard(deckId, newCard, abortController.signal);
         setNewCard({front: "", back: ""});
-        document.querySelector("#front").value = "";
-        document.querySelector("#back").value = "";
     }
 
-    const onChangeFront = (event) => {
+    const handleChange = ({ target }) => {
         setNewCard({
             ...newCard,
-            front: event.target.value
-        })
-    }
-
-    const onChangeBack = (event) => {
-        setNewCard({
-            ...newCard,
-            back: event.target.value
+            [target.name]: target.value
         })
     }
 
@@ -57,18 +49,11 @@ function AddCard() {
                 </ol>
             </nav>
             <h2>{currentDeck.name}: Add Card</h2>
-            <form  id="formData">
-                <div className="form-group">
-                    <label htmlFor="front">Front</label>
-                    <textarea  onChange={onChangeFront} type="text" className="form-control" id="front" placeholder="Front side of card"></textarea>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="back">Back</label>
-                    <textarea onChange={onChangeBack} type="text" className="form-control" id="back" placeholder="Back side of card"></textarea>
-                </div>
-                <button onClick={handleDone} className="btn btn-secondary" style={{marginRight: "0.5rem"}} >Done</button>
-                <button className="btn btn-primary" onClick={handleSave}>Save</button>
-            </form>
+            <EditAddForm 
+                cardInfo={newCard} setCardInfo={setNewCard}
+                handleChange={handleChange} handleDone={handleDone}
+                handleSave={handleSave}
+            />
         </div>
     )
 }

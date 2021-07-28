@@ -14,6 +14,7 @@ function CreateDeck({ renderDecks, setRenderDecks, currentDeckList, setCurrentDe
     }
 
     useEffect(() => {
+        setCurrentDeckList([]);
         const abortController = new AbortController();
 
         const deckCreator = async () => {

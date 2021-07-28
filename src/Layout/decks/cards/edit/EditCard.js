@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useHistory } from "react-router-dom";
 import { updateCard, readDeck, readCard } from "../../../../utils/api/index";
+import EditAddForm from '../EditAddForm';
 
 function EditCard() {
     const history = useHistory();
@@ -15,7 +16,6 @@ function EditCard() {
             console.log("deckid", deckId);
             const deck = await readDeck(deckId, abortController.signal);
             const card = await readCard(cardId, abortController.signal);
-            console.log(card)
             setCurrentDeck(deck);
             setCurrentCard(card);
         }
@@ -25,28 +25,21 @@ function EditCard() {
         return () => abortController.abort();
     }, [cardId, deckId]);
 
-    const handleCancel= () => {
+    const handleDone= () => {
         history.push(`/decks/${deckId}`);
     }
 
-    const handleSubmit = async(e) => {
+    const handleSave = async(e) => {
         e.preventDefault();
         const abortController = new AbortController();
         await updateCard(currentCard, abortController.signal);
         history.push(`/decks/${deckId}`);
     }
 
-    const onChangeFront = (event) => {
+    const handleChange = ({ target }) => {
         setCurrentCard({
             ...currentCard,
-            front: event.target.value
-        })
-    }
-
-    const onChangeBack = (event) => {
-        setCurrentCard({
-            ...currentCard,
-            back: event.target.value
+            [target.name]: target.value
         })
     }
     
@@ -61,18 +54,11 @@ function EditCard() {
                 </ol>
             </nav>
             <h2>Edit Card</h2>
-            <form  onSubmit={handleSubmit} id="formData">
-                <div className="form-group">
-                    <label htmlFor="front">Front</label>
-                    <textarea  onChange={onChangeFront} type="text" className="form-control" id="front" value={currentCard.front}></textarea>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="back">Back</label>
-                    <textarea onChange={onChangeBack} type="text" className="form-control" id="back" value={currentCard.back}></textarea>
-                </div>
-                <button onClick={handleCancel} className="btn btn-secondary" style={{marginRight: "0.5rem"}} >Cancel</button>
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
+            <EditAddForm 
+                cardInfo={currentCard} setCardInfo={setCurrentCard}
+                handleChange={handleChange} handleDone={handleDone}
+                handleSave={handleSave}
+            />
         </div>
     )
 }
